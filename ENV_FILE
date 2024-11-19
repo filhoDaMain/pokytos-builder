@@ -1,0 +1,2 @@
+# Path to Pokytos base dir
+export HOST_POKYTOS_DIR=/home/debian/dev/repos/pokytos-yocto/
