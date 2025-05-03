@@ -14,6 +14,7 @@ build:
 run:
 	docker run -it \
 	-v $(HOST_POKYTOS_DIR):$(HOST_POKYTOS_DIR) \
-	-w $(HOST_POKYTOS_DIR) \
+	-w $(HOST_POKYTOS_DIR)/pokytos \
 	-h $(image_name) \
 	$(image_name)
+
