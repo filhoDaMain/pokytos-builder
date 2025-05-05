@@ -14,7 +14,14 @@ build:
 run:
 	docker run -it \
 	-v $(HOST_POKYTOS_DIR):$(HOST_POKYTOS_DIR) \
-	-w $(HOST_POKYTOS_DIR)/pokytos \
+	-w $(HOST_POKYTOS_DIR) \
 	-h $(image_name) \
 	$(image_name)
+
+bitbake:
+	docker run \
+	-v $(HOST_POKYTOS_DIR):$(HOST_POKYTOS_DIR) \
+	-w $(HOST_POKYTOS_DIR)/pokytos \
+	$(image_name) \
+	/bin/bash -c "source pokytos-env; bitbake $(ARGS)"
 
