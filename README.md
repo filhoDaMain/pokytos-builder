@@ -12,7 +12,7 @@ $ ./build.sh
 **Set path to pokytos repo base dir**
 ```Bash
 # Edit in ENV_FILE file
-export HOST_POKYTOS_DIR=/home/debian/dev/repos/pokytos-yocto/
+export HOST_POKYTOS_DIR=/home/debian/repos/pokytos-yocto/
 ```
 <br/>
 
@@ -22,14 +22,29 @@ $ sudo ./install.sh
 ```
 <br/>
 
-**Launch container**
+**Launch container with interactive shell**
 ```Bash
 $ pokytos-builder.sh
 ```
 <br/>
 
-![container](./pokytos-builder.gif)
+![container](./build_and_launch_shell.gif)
+
+Calling **pokytos-builder.sh** from anywhere will launch a container with a shell at $HOST_POKYTOS_DIR
 
 <br/>
 
-Calling **pokytos-builder.sh** from anywhere will fire a container at $HOST_POKYTOS_DIR
+**Bitbake one target**
+```Bash
+$ pokytos-builder.sh bitbake <target and options>
+```
+<br/>
+
+![bitbake](./bitbake.gif)
+
+Calling **pokytos-builder.sh bitbake target** from anywhere will run inside pokytos-builder container:
+* `source $HOST_POKYTOS_DIR/pokytos/pokytos/pokytos-env`
+* `bitbake target`
+* exit container
+
+This option, with no interactive shell, can be useful to automate builds.
