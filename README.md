@@ -43,7 +43,7 @@ $ pokytos-builder.sh bitbake <target and options>
 ![bitbake](./bitbake.gif)
 
 Calling **pokytos-builder.sh bitbake target** from anywhere will run inside pokytos-builder container:
-* `source $HOST_POKYTOS_DIR/pokytos/pokytos/pokytos-env`
+* `source $HOST_POKYTOS_DIR/pokytos/pokytos-env`
 * `bitbake target`
 * exit container
 
