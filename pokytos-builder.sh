@@ -27,7 +27,7 @@ if [ $# -eq 0 ]; then
 
 # With arguments
 else
-    # Must be at leat 2 arguments in the form 'bitbake <arg1> arg<2> ...'
+    # Must be at least 2 arguments in the form 'bitbake <arg1> arg<2> ...'
     if [[ $# -lt 2 || "$1" != "bitbake" ]]; then
         usage
         popd

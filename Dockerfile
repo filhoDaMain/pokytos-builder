@@ -37,7 +37,8 @@ RUN apt-get update && apt-get install -y \
     file \
     locales \
     libacl1 \
-    tmux
+    tmux \
+    vim
 
 RUN locale-gen en_US.UTF-8
 
