@@ -48,3 +48,20 @@ Calling **pokytos-builder.sh bitbake target** from anywhere will run inside poky
 * exit container
 
 This option, with no interactive shell, can be useful to automate builds.
+
+<br/>
+
+---
+<br/>
+> [!TIP]
+> **Overriding HOST_POKYTOS_DIR from ENV_FILE is possible** by exporting HOST_POKYTOS_DIR before calling pokytos-builder.sh
+> This can be useful when dealing with multiple repo locations/workspaces
+
+```Bash
+$ export HOST_POKYTOS_DIR=/home/debian/repos/pokytos-alt-repo/
+
+# Launch container in pokytos-alt-repo
+$ pokytos-console-image bitbake pokytos-console-image
+
+$ unset HOST_POKYTOS_DIR
+```

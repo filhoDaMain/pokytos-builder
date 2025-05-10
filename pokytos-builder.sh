@@ -13,12 +13,23 @@ usage(){
     echo ""
 }
 
+# $1: exit code
+quit(){
+    popd
+    exit $1
+}
+
+
+
 # 'sed_marker' will be substituted by install.sh script with
 # path to pokytos-builder Makefile
 pushd sed_marker
 
-# Source env vars
-. ENV_FILE
+# Allow user to override HOST_POKYTOS_DIR from ENV_FILE.
+# If unset, source it from ENV_FILE.
+if [ -z "${HOST_POKYTOS_DIR}" ]; then
+    . ENV_FILE
+fi
 
 # No arguments -> Spawn container with a shell
 if [ $# -eq 0 ]; then
@@ -30,8 +41,7 @@ else
     # Must be at least 2 arguments in the form 'bitbake <arg1> arg<2> ...'
     if [[ $# -lt 2 || "$1" != "bitbake" ]]; then
         usage
-        popd
-        exit 1
+        quit 1
     fi
 
     # Concatenate all arguments (shift one to exclude 'bitbake' from arg list)
@@ -40,4 +50,4 @@ else
     make bitbake
 fi
 
-popd
+quit $?
