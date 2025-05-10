@@ -53,8 +53,9 @@ This option, with no interactive shell, can be useful to automate builds.
 
 ---
 <br/>
+
 > [!TIP]
-> **Overriding HOST_POKYTOS_DIR from ENV_FILE is possible** by exporting HOST_POKYTOS_DIR before calling pokytos-builder.sh
+> Overriding HOST_POKYTOS_DIR from ENV_FILE is possible by exporting HOST_POKYTOS_DIR before calling pokytos-builder.sh
 > This can be useful when dealing with multiple repo locations/workspaces
 
 ```Bash
