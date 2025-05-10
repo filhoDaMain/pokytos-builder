@@ -57,7 +57,8 @@ This option, with no interactive shell, can be useful to automate builds.
 > [!TIP]
 > **Overriding HOST_POKYTOS_DIR from ENV_FILE** is possible <br/>
 by exporting HOST_POKYTOS_DIR before calling pokytos-builder.sh <br/>
-> This can be useful when dealing with multiple repo locations/workspaces
+
+This can be useful when dealing with multiple repo locations/workspaces
 
 ```Bash
 $ export HOST_POKYTOS_DIR=/home/debian/repos/pokytos-alt-repo/
