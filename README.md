@@ -64,7 +64,7 @@ This can be useful when dealing with multiple repo locations/workspaces
 $ export HOST_POKYTOS_DIR=/home/debian/repos/pokytos-alt-repo/
 
 # Launch container in pokytos-alt-repo
-$ pokytos-console-image bitbake pokytos-console-image
+$ pokytos-builder.sh bitbake pokytos-console-image
 
 $ unset HOST_POKYTOS_DIR
 ```
