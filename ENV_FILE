@@ -1,2 +1,5 @@
 # Path to Pokytos base dir
 export HOST_POKYTOS_DIR=/home/debian/repos/pokytos-yocto/
+
+# Path ssh configs
+export HOST_SSH_CONF_DIR=/home/debian/.ssh/

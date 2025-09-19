@@ -14,6 +14,7 @@ build:
 run:
 	docker run -it --rm \
 	-v $(HOST_POKYTOS_DIR):$(HOST_POKYTOS_DIR) \
+	-v $(HOST_SSH_CONF_DIR):$(HOST_SSH_CONF_DIR) \
 	-w $(HOST_POKYTOS_DIR) \
 	-h $(image_name) \
 	$(image_name)
