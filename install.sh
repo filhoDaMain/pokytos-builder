@@ -1,10 +1,8 @@
 #!/bin/bash
 
-# Installation path
-INSTALLATION_PATH=/usr/local/bin/pokytos-builder.sh
+# Installation paths
+LAUNCHER_INSTALLATION_PATH=/usr/local/bin/pokytos-builder.sh
+CONF_INSTALLATION_PATH=/usr/local/etc/pokytos-builder.conf
 
-# Path to pokytos-builder Makefile (current dir)
-POKYTOS_BUILDER_MAKEPATH=$(pwd)
-
-cp ${POKYTOS_BUILDER_MAKEPATH}/pokytos-builder.sh ${INSTALLATION_PATH}
-sed -i "s#sed_marker#${POKYTOS_BUILDER_MAKEPATH}#g" ${INSTALLATION_PATH}
+install -D -o root -g root -m 755 pokytos-builder.sh ${LAUNCHER_INSTALLATION_PATH}
+install -D -o root -g root -m 644 MOUNT ${CONF_INSTALLATION_PATH}
