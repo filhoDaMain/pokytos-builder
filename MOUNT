@@ -1,0 +1,6 @@
+# First path becomes workdir inside container
+${HOME}/repos/pokytos-yocto/pokytos/
+${HOME}/repos/pokytos-yocto/.repo/
+${HOME}/data/bitbake.downloads/
+${HOME}/data/bitbake.sstate/
+${HOME}/.ssh/

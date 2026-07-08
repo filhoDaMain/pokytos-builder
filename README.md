@@ -3,68 +3,70 @@ Docker image for Yocto builds
 
 ## Quick reference
 
-**Build image**
+### Build Docker image
 ```Bash
 $ ./build.sh
 ```
-<br/>
 
-**Set path to pokytos repo base dir**
-```Bash
-# Edit in ENV_FILE file
-export HOST_POKYTOS_DIR=/home/debian/repos/pokytos-yocto/
+### Install launcher script
+Modify [MOUNT](https://github.com/filhoDaMain/pokytos-builder/blob/main/MOUNT) with all paths to mount from host inside Docker container
+```Text
+# First path becomes workdir inside container
+${HOME}/repos/pokytos-yocto/pokytos/
+${HOME}/repos/pokytos-yocto/.repo/
+[...]
 ```
-<br/>
-
-**Install container launcher**
+Install launcher script and `MOUNT` file
 ```Bash
 $ sudo ./install.sh
 ```
-<br/>
 
-**Launch container with interactive shell**
+### Invoke Docker container
+
+![pokytos-builder](./pokytos-builder.gif)
+
+#### 1) Interactive shell
 ```Bash
-$ pokytos-builder.sh
+$ pokytos-console-image.sh
 ```
-<br/>
+- A **pokytos-builder** container is launched with an interactive shell;
+- All directories and files from installed `MOUNT` are mounted in container;
+- First path from `MOUNT` becomes the container **workdir**.
 
-![container](./build_and_launch_shell.gif)
+</br>
 
-Calling **pokytos-builder.sh** from anywhere will launch a container with a shell at $HOST_POKYTOS_DIR
-
-<br/>
-
-**Bitbake one target**
+#### 2) Bitbake target and exit
 ```Bash
-$ pokytos-builder.sh bitbake <target and options>
+$ pokytos-console-image.sh bitbake <target and arguments>
 ```
-<br/>
-
-![bitbake](./bitbake.gif)
-
-Calling **pokytos-builder.sh bitbake target** from anywhere will run inside pokytos-builder container:
-* `source $HOST_POKYTOS_DIR/pokytos/pokytos-env`
-* `bitbake target`
-* exit container
-
-This option, with no interactive shell, can be useful to automate builds.
-
-<br/>
-
----
-<br/>
-
-> [!TIP]
-> **Overriding HOST_POKYTOS_DIR from ENV_FILE is possible** <br/>
-> by exporting HOST_POKYTOS_DIR before calling pokytos-builder.sh <br/>
-
-This can be useful when dealing with multiple repo locations/workspaces
-
+- A **pokytos-builder** container is launched;
+- All directories and files from installed `MOUNT` are mounted in container;
+- Inside **workdir** the following happens
 ```Bash
-$ export HOST_POKYTOS_DIR=/home/debian/repos/pokytos-alt-repo/
+$ source pokytos-env
+$ bitbake <target and arguments>
+```
+- Container exits with return value from bitbake status
 
-# Launch container in pokytos-alt-repo
-$ pokytos-builder.sh bitbake pokytos-console-image
+</br>
 
-$ unset HOST_POKYTOS_DIR
+#### 3) Mount directories from another file
+```Bash
+$ pokytos-console-image.sh -m <mount>
+```
+Sometimes you may have more than one instance of a Yocto image repository to build.
+
+In that case, you can create another **text file** like **MOUNT** and install it somewhere else. Define in that file the directories pertaining to this other repo and invoke **pokytos-builder.sh** with `-m` option followed by the path to that conf file.
+
+E.g.: `/home/foo/my-unstable-repo-dirs.conf`:
+```Text
+${HOME}/repos/unstable-pokytos-yocto/pokytos/
+${HOME}/repos/unstable-pokytos-yocto/.repo/
+[...]
+```
+This option can be combined with `bitbake` argument too
+```Bash
+$ pokytos-console-image.sh \
+-m /home/foo/my-unstable-repo-dirs.conf \
+bitbake pokytos-console-image -c do_rootfs
 ```
