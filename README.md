@@ -27,7 +27,7 @@ $ sudo ./install.sh
 
 #### 1) Interactive shell
 ```Bash
-$ pokytos-console-image.sh
+$ pokytos-builder.sh
 ```
 - A **pokytos-builder** container is launched with an interactive shell;
 - All directories and files from installed `MOUNT` are mounted in container;
@@ -37,7 +37,7 @@ $ pokytos-console-image.sh
 
 #### 2) Bitbake target and exit
 ```Bash
-$ pokytos-console-image.sh bitbake <target and arguments>
+$ pokytos-builder.sh bitbake <target and arguments>
 ```
 - A **pokytos-builder** container is launched;
 - All directories and files from installed `MOUNT` are mounted in container;
@@ -52,7 +52,7 @@ $ bitbake <target and arguments>
 
 #### 3) Mount directories from another file
 ```Bash
-$ pokytos-console-image.sh -m <mount>
+$ pokytos-builder.sh -m <mount>
 ```
 Sometimes you may have more than one instance of a Yocto image repository to build.
 
@@ -66,7 +66,7 @@ ${HOME}/repos/unstable-pokytos-yocto/.repo/
 ```
 This option can be combined with `bitbake` argument too
 ```Bash
-$ pokytos-console-image.sh \
+$ pokytos-builder.sh \
 -m /home/foo/my-unstable-repo-dirs.conf \
 bitbake pokytos-console-image -c do_rootfs
 ```
