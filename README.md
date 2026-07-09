@@ -41,7 +41,7 @@ $ pokytos-builder.sh bitbake <target and arguments>
 ```
 - A **pokytos-builder** container is launched;
 - All directories and files from installed `MOUNT` are mounted in container;
-- Inside **workdir** the following happens
+- Inside **workdir** (first path from `MOUNT`) the following happens
 ```Bash
 $ source pokytos-env
 $ bitbake <target and arguments>
