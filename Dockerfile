@@ -24,14 +24,8 @@
 FROM ubuntu:22.04
 ENV DEBIAN_FRONTEND=noninteractive 
 
-ARG UNAME=xxxx
-ARG UID=1000
-ARG GID=1000
 
 USER root
-RUN groupadd -g $GID -o $UNAME
-RUN useradd -m -u $UID -g $GID -o -s /bin/bash $UNAME
-
 
 # Required packages for Yocto build
 RUN apt-get update && apt-get install -y \
@@ -67,8 +61,6 @@ RUN apt-get update && apt-get install -y \
 
 RUN locale-gen en_US.UTF-8
 
-# Switch to user
-USER $UNAME
 CMD /bin/bash
-RUN echo "PS1=\"${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;36m\]\W\[\033[00m\]\$ \"" >> ~/.bashrc
-WORKDIR "/home/$UNAME"
+RUN cp ~/.bashrc /etc/bash.bashrc
+RUN echo "PS1=\"${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;36m\]\W\[\033[00m\]\$ \"" >> /etc/bash.bashrc
