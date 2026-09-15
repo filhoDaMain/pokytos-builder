@@ -1,0 +1,6 @@
+# Options passed to docker run
+--user $(id -u):$(id -g)
+--network host
+--security-opt seccomp=unconfined
+--device /dev/net/tun:/dev/net/tun
+--cap-add=NET_ADMIN

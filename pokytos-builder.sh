@@ -3,11 +3,16 @@
 set -euo pipefail
 
 IMAGE_NAME="pokytos-builder"
-MOUNT="${MOUNT:-/usr/local/etc/pokytos-builder.conf}"
+MOUNT="${MOUNT:-/usr/local/etc/pokytos-builder-MOUNT.conf}"
+OPTS="${OPTS:-/usr/local/etc/pokytos-builder-RUN_OPTS.conf}"
+PASSWD="/etc/passwd"
 
 # Read mount points from MOUNT
 mounts=()
 workdir=""
+
+# Read docker run options from OPTS
+opts=()
 
 
 # Parse a mount conf file passed as argument.
@@ -51,8 +56,30 @@ while IFS= read -r dir; do
 
 done < "$MOUNT"
 
+# Append passwd file to mounts dir
+mounts+=(-v "$PASSWD:$PASSWD:ro")
+
 if [[ -z "$workdir" ]]; then
     echo "Error: no mount directories found in $MOUNT" >&2
+    exit 1
+fi
+
+
+echo "Reading docker options from $OPTS"
+while IFS= read -r line; do
+    # Skip blank lines and comments
+    [[ "$line" =~ ^[[:space:]]*$ ]] && continue
+    [[ "$line" =~ ^[[:space:]]*# ]] && continue
+
+    # Evaluate dynamic expressions (like $(id -u), ${LUID}, etc.)
+    expanded_line=$(eval "echo \"$line\"")
+
+    # Append to opts string with newline only
+    opts+="${expanded_line}"$'\n'
+done < "$OPTS"
+
+if [[ -z "$opts" ]]; then
+    echo "Error: no valid options found in $OPTS" >&2
     exit 1
 fi
 
@@ -63,6 +90,7 @@ case "${1:-run}" in
         echo "Launching interactive shell at $workdir"
         echo
         exec docker run -it --rm \
+            $opts \
             "${mounts[@]}" \
             -w "$workdir" \
             -h "$IMAGE_NAME" \
@@ -74,6 +102,7 @@ case "${1:-run}" in
         echo
         shift
         exec docker run --rm \
+            $opts \
             "${mounts[@]}" \
             -w "$workdir" \
             "$IMAGE_NAME" \
