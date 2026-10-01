@@ -106,7 +106,7 @@ case "${1:-run}" in
             "${mounts[@]}" \
             -w "$workdir" \
             "$IMAGE_NAME" \
-            /bin/bash -c "source pokytos-env && bitbake $*"
+            /bin/bash -c "source init && bitbake $*"
         ;;
 
     *)
