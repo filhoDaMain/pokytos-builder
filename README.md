@@ -16,8 +16,9 @@ $ ./build.sh
 Modify [MOUNT](https://github.com/filhoDaMain/pokytos-builder/blob/main/MOUNT) with all paths to mount from host inside Docker container
 ```Text
 # First path becomes workdir inside container
-${HOME}/repos/pokytos-yocto/pokytos/
-${HOME}/repos/pokytos-yocto/.repo/
+${HOME}/repos/pokytos/
+${HOME}/data/bitbake.downloads/
+${HOME}/data/bitbake.sstate/
 [...]
 ```
 
@@ -60,7 +61,7 @@ $ pokytos-builder.sh bitbake <target and arguments>
 - Same as in **Interactive shell**, plus:
 - Inside **workdir** the following is executed
 ```Bash
-$ source pokytos-env
+$ source init
 $ bitbake <target and arguments>
 ```
 - Container exits with return value from bitbake status
@@ -77,8 +78,7 @@ In that case, you can create another **text file** like **MOUNT** and install it
 
 E.g.: Use `/home/foo/my-unstable-repo-dirs.conf` instead of installed `MOUNT`file:
 ```Text
-${HOME}/repos/unstable-pokytos-yocto/pokytos/
-${HOME}/repos/unstable-pokytos-yocto/.repo/
+${HOME}/repos/unstable-pokytos/
 [...]
 ```
 This option can be combined with `bitbake` argument too
